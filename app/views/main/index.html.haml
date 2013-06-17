@@ -1,0 +1,70 @@
+-@newsfeeds.items.each do |item|
+  -sources=item_sources(item,@newsfeeds)
+  -attachments=item.attachments ? item.attachments.select{|a| %w(photo posted_photo).include?(a.type)} : []
+  -attachments_audio=item.attachments ? item.attachments.select{|a| %w(audio).include?(a.type)} : []
+  -attachments_link=item.attachments ? item.attachments.select{|a| %w(link).include?(a.type)} : []
+  -attachments_video=item.attachments ? item.attachments.select{|a| %w(video).include?(a.type)} : []
+  .newsfeed.item
+    .row
+      .span2
+        .right
+          =link_to vk_url(sources[0]), target: '_blank' do
+            -if sources[0].photo_medium
+              =image_tag sources[0].photo_medium, alt: sources[0].screen_name, class: 'rounded'
+            -else
+              =image_tag sources[0].photo_medium_rec, alt: sources[0].screen_name, class: 'rounded'
+      .span7
+        %div
+          -if item.type
+            =item.type.upcase
+            \:
+          -sources.each_with_index do |source,i|
+            -if i>0
+              →
+            =human_source_name(source)
+        =raw item.text
+        -if attachments.present?
+          %div
+            -attachments.each do |attachment|
+              -attach=attachment[attachment.type]
+              =link_to attach.src_big, target: '_blank' do
+                =image_tag(attach.src, alt: attach.src_big, class: 'rounded')
+        -if attachments_video
+          -attachments_video.each do |video|
+
+            -vid=video[video.type]
+            =vid.title
+            %br
+            =link_to "http://vk.com/video#{vid.owner_id}_#{vid.vid}", target: '_blank' do
+              =image_tag(vid.image, alt: vid.title, class: 'rounded')
+            %br
+            =raw vid.description
+        -if attachments_link
+          -attachments_link.each do |link|
+            -ln=link[link.type]
+            =link_to ln.title, ln.url
+        -if item.photos
+          -item.photos.shift
+          -item.photos.each do |photo|
+            =link_to photo.src_big, target: '_blank' do
+              =image_tag(photo.src, alt: photo.src_big, class: 'rounded')
+        -if item.video
+          -item.video.shift
+          -item.video.each do |video|
+            =video.title
+            %br
+            =link_to photo.src_big, target: '_blank' do
+              =image_tag(photo.src, alt: photo.src_big, class: 'rounded')
+        -if attachments_audio.present?
+          -#=attachments_audio.inspect
+          %div
+            -attachments_audio.each do |attachment|
+              -attach=attachment[attachment.type]
+              %p
+                -min=attach.duration/60
+                -sec=attach.duration%60
+                #{attach.performer} - #{attach.title} (#{min}:#{sec})
+        .hint
+          =l(Time.at(item.date), format: :long)
+#news_button
+  =link_to "Загружат!!!", "#", {:onclick => 'update_news_div(' + @offset.to_s + ')'}

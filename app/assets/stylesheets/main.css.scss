@@ -1,0 +1,31 @@
+@import "twitter/bootstrap";
+body{
+  margin-top: 60px;
+}
+
+.right{
+  float: right;
+}
+.left{
+  float: left;
+}
+.clear{
+  clear: both;
+}
+
+
+.item{
+  border-top: 1px solid $tableBorder;
+  padding: 10px 0;
+}
+.hint{
+  color: $grayLight;
+}
+
+img.rounded{
+  @include border-radius(10px);
+}
+
+img.rmargin{
+  margin-right:10px;
+}

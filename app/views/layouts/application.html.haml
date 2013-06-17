@@ -1,0 +1,29 @@
+!!!
+%html(lang="ru")
+  %head
+    %meta(charset="utf-8")
+    %title VkApi sample
+    = csrf_meta_tags
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "application"
+  %body
+    .navbar.navbar-fixed-top.navbar-inverse
+      .navbar-inner
+        .container
+          =link_to "VkApi Example", root_path, class: 'brand'
+          -if @user
+            %ul.nav.pull-right
+              %li
+                -#=link_to "Search", search_path
+              %li
+                =link_to vk_url(@user), target: '_blank' do
+                  =image_tag(@user.photo, alt: @user.screen_name, width: 20)
+                  ="#{@user.first_name} #{@user.last_name}"
+
+
+    .container
+      -if flash[:error].present?
+        .alert.alert-error=flash[:error]
+      .row
+        .span9=yield
+        .span3=yield :sidebar

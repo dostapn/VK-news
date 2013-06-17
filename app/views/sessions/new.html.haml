@@ -1,0 +1,5 @@
+=form_tag controller: 'sessions', action: 'create' do
+  =text_field_tag :username, @username, placeholder: 'Адрес электронной почты'
+  =password_field_tag :password, nil, placeholder: 'Пароль'
+  .form-actions
+    =submit_tag 'Войти через вКонтакте',class: 'btn'
