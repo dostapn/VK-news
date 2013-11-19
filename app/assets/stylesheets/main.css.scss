@@ -1,4 +1,5 @@
 @import "twitter/bootstrap";
+
 body{
   margin-top: 60px;
 }
@@ -13,17 +14,16 @@ body{
   clear: both;
 }
 
-
 .item{
-  border-top: 1px solid $tableBorder;
+  border-top: 1px solid #394053;
   padding: 10px 0;
 }
 .hint{
-  color: $grayLight;
+  color: #394053;
 }
 
 img.rounded{
-  @include border-radius(10px);
+  border-radius: 10px;
 }
 
 img.rmargin{
